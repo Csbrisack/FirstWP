@@ -1,50 +1,653 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UI Component Preview</title>
-    <link rel="stylesheet" href="style.css">
-    
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Ted Coran, Attorney at Law</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <style>
+    :root {
+      --bg-main: #22272B;
+      --bg-panel: #333A40;
+      --text-main: #E2E2E2;
+      --text-muted: #82878B;
+      --accent: #0abf53;
+      --radius: 14px;
+      --transition: 0.3s cubic-bezier(.4,0,.2,1);
+      /* For responsiveness */
+      --nav-width: 60px;
+      --nav-width-expanded: 180px;
+    }
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg-main);
+    }
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Poppins', Arial, sans-serif;
+      color: var(--text-main);
+      background: var(--bg-main);
+      min-height: 100vh;
+    }
+    /* ==== Floating Navigation Bar ==== */
+    nav {
+      position: fixed;
+      top: 32px;
+      left: 32px;
+      z-index: 100;
+      background: var(--bg-panel);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 12px 0;
+      width: var(--nav-width);
+      transition: width var(--transition);
+    }
+    nav:hover, nav:focus-within {
+      width: var(--nav-width-expanded);
+    }
+    .nav-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .nav-item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+      padding: 8px 18px;
+      border-radius: 8px;
+      color: var(--text-main);
+      transition: background var(--transition), color var(--transition);
+    }
+    .nav-item:hover, .nav-item.active {
+      background: rgba(10,191,83,0.15);
+      color: var(--accent);
+    }
+    .nav-item ion-icon {
+      font-size: 1.7em;
+      margin-right: 0;
+      transition: margin-right var(--transition), color var(--transition);
+    }
+    .nav-label {
+      opacity: 0;
+      pointer-events: none;
+      margin-left: 14px;
+      font-size: 1em;
+      font-weight: 500;
+      color: var(--text-main);
+      transition: opacity var(--transition), color var(--transition);
+    }
+    nav:hover .nav-label, nav:focus-within .nav-label,
+    .nav-item:focus .nav-label, .nav-item:hover .nav-label {
+      opacity: 1;
+      pointer-events: auto;
+      color: var(--accent);
+    }
+    /* Hide nav on small screens */
+    @media (max-width: 700px) {
+      nav {
+        top: auto;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 100vw;
+        height: 60px;
+        border-radius: 0;
+        flex-direction: row;
+        padding: 0 8px;
+      }
+      .nav-list {
+        flex-direction: row;
+        gap: 0;
+        width: 100%;
+        justify-content: space-evenly;
+      }
+      .nav-item {
+        padding: 0 12px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0;
+      }
+      .nav-label {
+        margin-left: 0;
+        margin-top: 2px;
+        font-size: 0.9em;
+      }
+      nav:hover .nav-label, nav:focus-within .nav-label,
+      .nav-item:focus .nav-label, .nav-item:hover .nav-label {
+        opacity: 1;
+        color: var(--accent);
+      }
+    }
+    /* ==== HERO ==== */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: var(--bg-main);
+      padding: 0 24px;
+      text-align: center;
+      position: relative;
+    }
+    #home h1 {
+      font-size: 2.8em;
+      font-weight: 700;
+      margin-bottom: 14px;
+      letter-spacing: 1px;
+      color: var(--accent);
+      text-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    #home p {
+      font-size: 1.4em;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      font-weight: 400;
+    }
+    #home button {
+      padding: 16px 38px;
+      font-size: 1.1em;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius);
+      background: var(--accent);
+      color: var(--bg-main);
+      cursor: pointer;
+      box-shadow: 0 3px 18px rgba(10,191,83,0.18);
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+    #home button:hover {
+      background: #079d44;
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 6px 28px rgba(10,191,83,0.32);
+    }
+    /* ==== Sections General ==== */
+    section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 64px 20px 32px 20px;
+    }
+    section h2 {
+      font-size: 2em;
+      font-weight: 700;
+      margin-bottom: 28px;
+      color: var(--accent);
+      letter-spacing: 0.2px;
+    }
+    @media (max-width: 700px) {
+      section {
+        padding: 48px 8px 24px 8px;
+      }
+      section h2 {
+        font-size: 1.3em;
+      }
+    }
+    /* ==== About Section ==== */
+    #about {
+      display: flex;
+      flex-direction: row;
+      gap: 48px;
+      align-items: flex-start;
+      background: var(--bg-panel);
+      border-radius: var(--radius);
+      box-shadow: 0 3px 16px rgba(0,0,0,0.15);
+      margin-top: 32px;
+    }
+    .about-photo {
+      flex: 0 0 180px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent) 0%, #333A40 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 12px rgba(10,191,83,0.16);
+      border: 6px solid var(--bg-main);
+      margin-top: 12px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+    .about-photo::after {
+      content: '';
+      display: block;
+      width: 120px;
+      height: 120px;
+      background: url('https://ui-avatars.com/api/?name=Ted+Coran&background=333A40&color=E2E2E2&size=256') no-repeat center/cover;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      box-shadow: 0 2px 8px rgba(10,191,83,0.12);
+    }
+    .about-content {
+      flex: 1 1 0;
+      color: var(--text-main);
+      font-size: 1.15em;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    @media (max-width: 800px) {
+      #about {
+        flex-direction: column;
+        gap: 24px;
+        align-items: center;
+      }
+      .about-photo {
+        margin: 0 auto 14px auto;
+      }
+    }
+    /* ==== Practice Areas ==== */
+    #practice-areas {
+      background: var(--bg-panel);
+      border-radius: var(--radius);
+      box-shadow: 0 2px 14px rgba(0,0,0,0.13);
+      margin-top: 36px;
+    }
+    .practice-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .practice-card {
+      background: #293038;
+      border-radius: var(--radius);
+      padding: 32px 22px 24px 22px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+      transition: transform var(--transition), box-shadow var(--transition), border var(--transition);
+      border: 2px solid transparent;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      height: 100%;
+      justify-content: flex-start;
+    }
+    .practice-card:hover {
+      transform: translateY(-6px) scale(1.04);
+      border: 2px solid var(--accent);
+      box-shadow: 0 8px 24px rgba(10,191,83,0.18);
+      color: var(--accent);
+    }
+    .practice-card h3 {
+      font-size: 1.25em;
+      margin: 0 0 8px 0;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .practice-card p {
+      color: var(--text-muted);
+      font-size: 1em;
+      margin: 0;
+    }
+    @media (max-width: 900px) {
+      .practice-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+    }
+    @media (max-width: 600px) {
+      .practice-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      .practice-card {
+        padding: 24px 14px 16px 14px;
+      }
+    }
+    /* ==== Contact ==== */
+    #contact {
+      background: var(--bg-panel);
+      border-radius: var(--radius);
+      box-shadow: 0 2px 14px rgba(0,0,0,0.13);
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .contact-info {
+      font-size: 1em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .contact-form {
+      width: 100%;
+      max-width: 460px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-bottom: 16px;
+    }
+    .contact-form label {
+      font-size: 1em;
+      margin-bottom: 4px;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+    .contact-form input,
+    .contact-form textarea {
+      border: none;
+      border-radius: var(--radius);
+      background: #293038;
+      color: var(--text-main);
+      font-size: 1em;
+      padding: 14px;
+      font-family: inherit;
+      margin-bottom: 2px;
+      transition: border var(--transition), box-shadow var(--transition);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      border: 1.5px solid transparent;
+      outline: none;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border: 1.5px solid var(--accent);
+      box-shadow: 0 3px 12px rgba(10,191,83,0.09);
+    }
+    .contact-form textarea {
+      resize: vertical;
+      min-height: 80px;
+      max-height: 220px;
+    }
+    .contact-form button {
+      padding: 14px 34px;
+      font-size: 1.05em;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius);
+      background: var(--accent);
+      color: var(--bg-main);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(10,191,83,0.13);
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+    .contact-form button:hover {
+      background: #079d44;
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 6px 20px rgba(10,191,83,0.22);
+    }
+    .form-error {
+      color: #ff7c7c;
+      font-size: 0.98em;
+      margin-top: -8px;
+      margin-bottom: 5px;
+      display: none;
+    }
+    .form-success {
+      color: var(--accent);
+      font-size: 1.05em;
+      margin: 8px 0 0 0;
+      display: none;
+    }
+    /* ==== Footer ==== */
+    footer {
+      background: transparent;
+      color: var(--text-muted);
+      text-align: center;
+      font-size: 1em;
+      padding: 24px 0 18px 0;
+      letter-spacing: 0.5px;
+      margin-top: 54px;
+    }
+    /* ==== Animations ==== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeIn 0.8s forwards;
+    }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+    /* ==== Hide scroll bar ==== */
+    ::-webkit-scrollbar {
+      width: 0.6em;
+      background: var(--bg-panel);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 8px;
+    }
+    /* ==== Custom selection ==== */
+    ::selection {
+      background: var(--accent);
+      color: var(--bg-main);
+    }
+  </style>
 </head>
 <body>
+  <nav aria-label="Main">
+    <ul class="nav-list">
+      <li class="nav-item" tabindex="0" data-target="home">
+        <ion-icon name="home-outline"></ion-icon>
+        <span class="nav-label">Home</span>
+      </li>
+      <li class="nav-item" tabindex="0" data-target="about">
+        <ion-icon name="person-outline"></ion-icon>
+        <span class="nav-label">About</span>
+      </li>
+      <li class="nav-item" tabindex="0" data-target="practice-areas">
+        <ion-icon name="briefcase-outline"></ion-icon>
+        <span class="nav-label">Practice Areas</span>
+      </li>
+      <li class="nav-item" tabindex="0" data-target="contact">
+        <ion-icon name="mail-outline"></ion-icon>
+        <span class="nav-label">Contact</span>
+      </li>
+    </ul>
+  </nav>
+  <section id="home" class="fade-in">
+    <h1>Ted Coran, Attorney at Law</h1>
+    <p>Dedicated Legal Representation in Oregon</p>
+    <button id="ctaBtn">Schedule a Consultation</button>
+  </section>
+  <section id="about" class="fade-in">
+    <div class="about-photo" aria-label="Ted Coran Headshot"></div>
+    <div class="about-content">
+      <p>
+        Ted Coran is a passionate advocate committed to delivering clear, effective, and honest legal representation for every client. With years of experience in Oregon courts, Ted brings a strategic approach and unwavering dedication to each case.
+      </p>
+      <p>
+        A graduate of University of Oregon School of Law, Ted is admitted to the Oregon State Bar. He believes in transparent communication, client empowerment, and pursuing justice with integrity.
+      </p>
+      <p>
+        Ted’s legal philosophy centers on treating every client with respect, listening closely, and working tirelessly to achieve positive outcomes. Whether in negotiation or litigation, Ted stands by his clients every step of the way.
+      </p>
+    </div>
+  </section>
+  <section id="practice-areas" class="fade-in">
+    <h2>Practice Areas</h2>
+    <div class="practice-grid">
+      <div class="practice-card">
+        <h3>Criminal Defense</h3>
+        <p>
+          Protecting your rights and freedom with strategic defense against all criminal charges—from misdemeanors to serious felonies.
+        </p>
+      </div>
+      <div class="practice-card">
+        <h3>Family Law</h3>
+        <p>
+          Compassionate guidance for divorce, custody, support, and adoption matters. Ted helps families navigate challenging transitions.
+        </p>
+      </div>
+      <div class="practice-card">
+        <h3>Personal Injury</h3>
+        <p>
+          Seeking fair compensation for injuries and losses. Ted fights for justice and recovery in accident and negligence cases.
+        </p>
+      </div>
+      <div class="practice-card">
+        <h3>Estate Planning</h3>
+        <p>
+          Secure your family’s future with thoughtful wills, trusts, and probate services tailored to your unique needs and wishes.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section id="contact" class="fade-in">
+    <h2>Contact</h2>
+    <div class="contact-info">
+      <div><strong>Phone:</strong> (555) 123-4567</div>
+      <div><strong>Office:</strong> 123 Main St, Portland, OR 97201</div>
+    </div>
+    <form class="contact-form" id="contactForm" autocomplete="off" novalidate>
+      <div>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" maxlength="72" required autocomplete="name" />
+        <div class="form-error" id="error-name"></div>
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" maxlength="120" required autocomplete="email" />
+        <div class="form-error" id="error-email"></div>
+      </div>
+      <div>
+        <label for="message">Message</label>
+        <textarea id="message" name="message" maxlength="500" required autocomplete="off"></textarea>
+        <div class="form-error" id="error-message"></div>
+      </div>
+      <button type="submit">Submit</button>
+      <div class="form-success" id="form-success"></div>
+    </form>
+  </section>
+  <footer>
+    © 2025 Ted Coran. All Rights Reserved.
+  </footer>
+  <script>
+    // Smooth scrolling for nav links and CTA button
+    function scrollToSection(sectionId) {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        window.scrollTo({
+          top: el.getBoundingClientRect().top + window.scrollY - (window.innerWidth < 700 ? 60 : 0),
+          behavior: "smooth"
+        });
+      }
+    }
+    // Navigation click events
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', e => {
+        e.preventDefault();
+        const target = item.getAttribute('data-target');
+        if (target) {
+          scrollToSection(target);
+          document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+          item.classList.add('active');
+        }
+      });
+      // Accessibility: Enter key scroll
+      item.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          item.click();
+        }
+      });
+    });
+    // CTA Button scroll to contact
+    document.getElementById('ctaBtn').addEventListener('click', function() {
+      scrollToSection('contact');
+    });
 
-    <nav class="nav">
-        <a href="#" class="nav__link">
-          <span class="nav__icon-container">
-            <ion-icon name="water-outline"></ion-icon>
-          </span>
-          <span class="nav__text">Home</span>
-        </a>
-        <a href="#" class="nav__link nav__link--active">
-          <span class="nav__icon-container">
-            <ion-icon name="apps-outline"></ion-icon>
-          </span>
-          <span class="nav__text">Gallery</span>
-        </a>
-        <a href="#" class="nav__link">
-          <span class="nav__icon-container">
-            <ion-icon name="settings-outline"></ion-icon>
-          </span>
-          <span class="nav__text">Settings</span>
-        </a>
-        <a href="#" class="nav__link">
-          <span class="nav__icon-container">
-            <ion-icon name="person-outline"></ion-icon>
-          </span>
-          <span class="nav__text">Profile</span>
-        </a>
-        <a href="#" class="nav__link">
-          <span class="nav__icon-container">
-            <ion-icon name="chatbubbles-outline"></ion-icon>
-          </span>
-          <span class="nav__text">Contact</span>
-        </a>
-    </nav>
+    // Highlight nav based on scroll position
+    const sectionIds = ["home", "about", "practice-areas", "contact"];
+    function updateNavHighlight() {
+      let closest = sectionIds[0];
+      let minDist = Number.POSITIVE_INFINITY;
+      sectionIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          const dist = Math.abs(rect.top - (window.innerWidth < 700 ? 60 : 0));
+          if (dist < minDist) {
+            minDist = dist;
+            closest = id;
+          }
+        }
+      });
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.toggle('active', item.getAttribute('data-target') === closest);
+      });
+    }
+    window.addEventListener('scroll', updateNavHighlight);
+    window.addEventListener('resize', updateNavHighlight);
+    document.addEventListener('DOMContentLoaded', updateNavHighlight);
 
+    // Contact form validation
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      let isValid = true;
 
-    <script src="script.js"></script>
+      // Helper: show error
+      function showError(id, msg) {
+        const err = document.getElementById('error-' + id);
+        if (err) {
+          err.textContent = msg;
+          err.style.display = 'block';
+        }
+      }
+      // Helper: hide error
+      function hideError(id) {
+        const err = document.getElementById('error-' + id);
+        if (err) err.style.display = 'none';
+      }
+      function validateEmail(email) {
+        // Simple regex for email validation
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+      }
+      // Validate Name
+      const name = form.name.value.trim();
+      if (!name) {
+        showError('name', 'Name is required.');
+        isValid = false;
+      } else {
+        hideError('name');
+      }
+      // Validate Email
+      const email = form.email.value.trim();
+      if (!email) {
+        showError('email', 'Email is required.');
+        isValid = false;
+      } else if (!validateEmail(email)) {
+        showError('email', 'Please enter a valid email address.');
+        isValid = false;
+      } else {
+        hideError('email');
+      }
+      // Validate Message
+      const message = form.message.value.trim();
+      if (!message) {
+        showError('message', 'Message cannot be empty.');
+isValid = false;
+      } else {
+        hideError('message');
+      }
+      // If valid, simulate success
+      const successMsg = document.getElementById('form-success');
+      if (isValid) {
+        successMsg.textContent = "Thank you for reaching out! Your message has been sent.";
+        successMsg.style.display = "block";
+        form.reset();
+        setTimeout(() => { successMsg.style.display = "none"; }, 3500);
+      } else {
+        successMsg.style.display = "none";
+      }
+    });
+  </script>
 </body>
 </html>
