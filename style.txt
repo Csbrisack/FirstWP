@@ -1,0 +1,67 @@
+/* Basic Reset and Body Style */
+body {
+    margin: 0;
+    background-color: #22272B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: sans-serif;
+}
+
+/* Navigation Bar Styling */
+.nav {
+    background-color: #333A40;
+    padding: 1.2rem 1.5rem;
+    border-radius: 0.8rem;
+    display: flex;
+    gap: 1.2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.nav__link {
+    color: #82878B;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1rem;
+    border-radius: 0.5rem;
+    position: relative;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.nav__icon-container {
+    display: inline-flex;
+    font-size: 1.5rem;
+}
+
+.nav__text {
+    display: none; /* Hide text by default */
+    font-weight: 500;
+}
+
+/* Hover and Active States */
+.nav__link:hover,
+.nav__link--active {
+    color: #E2E2E2;
+    background-color: #4A5258;
+}
+
+.nav__link:hover .nav__text,
+.nav__link--active .nav__text {
+    display: inline; /* Show text on hover/active */
+}
+
+.nav__link--active::before {
+    content: '';
+    position: absolute;
+    bottom: -0.6rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: #0abf53;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0.2rem #22272B;
+}

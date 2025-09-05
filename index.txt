@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI Component Preview</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+
+    <nav class="nav">
+        <a href="#" class="nav__link">
+          <span class="nav__icon-container">
+            <ion-icon name="water-outline"></ion-icon>
+          </span>
+          <span class="nav__text">Home</span>
+        </a>
+        <a href="#" class="nav__link nav__link--active">
+          <span class="nav__icon-container">
+            <ion-icon name="apps-outline"></ion-icon>
+          </span>
+          <span class="nav__text">Gallery</span>
+        </a>
+        <a href="#" class="nav__link">
+          <span class="nav__icon-container">
+            <ion-icon name="settings-outline"></ion-icon>
+          </span>
+          <span class="nav__text">Settings</span>
+        </a>
+        <a href="#" class="nav__link">
+          <span class="nav__icon-container">
+            <ion-icon name="person-outline"></ion-icon>
+          </span>
+          <span class="nav__text">Profile</span>
+        </a>
+        <a href="#" class="nav__link">
+          <span class="nav__icon-container">
+            <ion-icon name="chatbubbles-outline"></ion-icon>
+          </span>
+          <span class="nav__text">Contact</span>
+        </a>
+    </nav>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
